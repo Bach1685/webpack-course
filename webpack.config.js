@@ -3,9 +3,12 @@ const path = require('path') //path - встроенный модуль в node.
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.js', // входной файл
+    entry: {
+        main: './src/index.js',
+        analytics: './src/analytics.js'
+    }, // входной файл
     output: {
-        filename: 'bundle.js', // куда складываются все скрипты
+        filename: '[name]bundle.js', // куда складываются все скрипты
         path: path.resolve(__dirname, 'dist') // 
     }
 }
