@@ -1,5 +1,6 @@
 const path = require('path') //path - встроенный модуль в node.js
 const HTMLWebpackPlugin = require('html-webpack-plugin') // плагин для работы с html 
+const { Template } = require('webpack')
 
 
 module.exports = {
@@ -14,7 +15,13 @@ module.exports = {
     },
     plugins:[
         new HTMLWebpackPlugin({
-            title: 'My app' // создастся тэг <title> с содержимым "my app"
+            // создастся тэг <title> с содержимым "my app". 
+            // Закомментируем его, так как template его перезатрёт 
+            //title: 'My app',  
+            
+            // webpack пересоздаёт файл dist/index.html. 
+            // Чтобы в нем не удялялась наша верстка, мы прописываем путь к нашему файлику
+            template: './src/index.html' 
         })
     ]
 }
