@@ -1,4 +1,5 @@
 const path = require('path') //path - встроенный модуль в node.js
+const HTMLWebpackPlugin = require('html-webpack-plugin') // плагин для работы с html 
 
 
 module.exports = {
@@ -10,5 +11,10 @@ module.exports = {
     output: {
         filename: '[name][contenthash].js', // куда складываются все скрипты
         path: path.resolve(__dirname, 'dist') // 
-    }
+    },
+    plugins:[
+        new HTMLWebpackPlugin({
+            title: 'My app' // создастся тэг <title> с содержимым "my app"
+        })
+    ]
 }
