@@ -3,12 +3,12 @@ const HTMLWebpackPlugin = require('html-webpack-plugin') // плагин для 
 const { Template } = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-
 module.exports = {
+    context: path.resolve(__dirname, 'src'),
     mode: 'development',
     entry: {
-        main: './src/index.js',
-        analytics: './src/analytics.js'
+        main: './index.js',
+        analytics: './analytics.js'
     }, // входной файл
     output: {
         filename: '[name][contenthash].js', // куда складываются все скрипты
@@ -22,7 +22,7 @@ module.exports = {
             
             // webpack пересоздаёт файл dist/index.html. 
             // Чтобы в нем не удялялась наша верстка, мы прописываем путь к нашему файлику
-            template: './src/index.html' 
+            template: './index.html' 
         }),
         new CleanWebpackPlugin() // для очистки старых скриптов
     ]
