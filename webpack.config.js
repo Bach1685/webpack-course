@@ -1,6 +1,7 @@
 const path = require('path') //path - встроенный модуль в node.js
 const HTMLWebpackPlugin = require('html-webpack-plugin') // плагин для работы с html 
 const { Template } = require('webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 
 module.exports = {
@@ -22,6 +23,7 @@ module.exports = {
             // webpack пересоздаёт файл dist/index.html. 
             // Чтобы в нем не удялялась наша верстка, мы прописываем путь к нашему файлику
             template: './src/index.html' 
-        })
+        }),
+        new CleanWebpackPlugin() // для очистки старых скриптов
     ]
 }
