@@ -26,6 +26,14 @@ module.exports = {
             chunks: 'all'
         }
     },
+    devServer:{
+        static: {
+            directory: path.join(__dirname, 'src'),
+        },
+        compress: true,
+        port: 4200,
+        open: true,
+    },
     plugins:[
         new HTMLWebpackPlugin({
             // создастся тэг <title> с содержимым "my app". 

@@ -8,4 +8,4 @@ import * as $ from 'jquery' //* as $ - означает, что мы импор�
 
 const post = new Post('webpack post title', WebpackLogo)
 
-$('pre').html(post.toString())
+$('pre').addClass('code').html(post.toString())
