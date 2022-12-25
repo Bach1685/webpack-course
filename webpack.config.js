@@ -14,6 +14,13 @@ module.exports = {
         filename: '[name][contenthash].js', // куда складываются все скрипты
         path: path.resolve(__dirname, 'dist') // 
     },
+    resolve: {
+        extensions: ['.js', '.json', '.png'], // чтобы при экспорте файлов не указывать расширение
+        alias: {
+            '@models': path.resolve(__dirname, 'src/models'),
+            '@': path.resolve(__dirname, 'src')
+        }
+    },
     plugins:[
         new HTMLWebpackPlugin({
             // создастся тэг <title> с содержимым "my app". 
