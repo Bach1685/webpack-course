@@ -4,7 +4,8 @@ import json from '@/assets/json.json' //вот так легко можно по
 import WebpackLogo from './assets/webpack-logo.png'
 import xml from '@/assets/data.xml'
 import csv from '@/assets/data.csv'
+import * as $ from 'jquery' //* as $ - означает, что мы импортироует абсолютно всё в переменную $
 
 const post = new Post('webpack post title', WebpackLogo)
 
-console.log('csv', csv)
+$('pre').html(post.toString())
