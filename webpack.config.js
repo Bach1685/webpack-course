@@ -53,6 +53,10 @@ module.exports = {
                 // Проблема с дублированием файлов (png, fonts).
                 // Вместо use: 'file-loader' используйте type: 'asset/resource' - это нововведение (относительное) Webpack, которое помогает избежать данной ошибки. Подробнее можно узнать в документации Webpack в разделе asset-modules, там все кристально объяснено.
                  type: 'asset/resource'
+            },
+            {
+                test: /\.xml$/,
+                use: ['xml-loader'] 
             }
         ]
     }
