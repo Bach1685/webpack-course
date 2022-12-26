@@ -3,6 +3,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin') // плагин для 
 const { Template } = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -46,13 +47,18 @@ module.exports = {
             template: './index.html' 
         }),
         new CleanWebpackPlugin(), // для очистки старых скриптов
-        new CopyWebpackPlugin({ // плагин нужен для копирования элементов в папку dist, потому как пересборка очищает файлы
+        new CopyWebpackPlugin({ 
+            // плагин нужен для копирования элементов в папку dist, потому как пересборка очищает файлы
+            // можно переносить таким образом всё, что угодно, не только фав иконки
             patterns: [
                 {
                     from: path.resolve(__dirname, 'src/icons8-globe-africa-16.ico'), //откуда копируем
                     to: path.resolve(__dirname, 'dist') // куда
                 }
             ]
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name][contenthash].css', 
         })
     ],
     module:{
@@ -63,7 +69,13 @@ module.exports = {
                 test: /\.css$/,
                 // важен порядок: вебпак идёт справа налево, пропуская всё сначала через css-loader и так далее.
                 // style-loader добавляет css в тег head в html 
-                use: ['style-loader','css-loader'] 
+                use: [ 
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {},
+                    },
+                    'css-loader'
+                ] 
             },
             {
                 // говорим вебпаку: как только ты встречаешь файлы с расширением png или jpg или svg или git
