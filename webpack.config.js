@@ -2,6 +2,7 @@ const path = require('path') //path - встроенный модуль в node.
 const HTMLWebpackPlugin = require('html-webpack-plugin') // плагин для работы с html 
 const { Template } = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -44,7 +45,15 @@ module.exports = {
             // Чтобы в нем не удялялась наша верстка, мы прописываем путь к нашему файлику
             template: './index.html' 
         }),
-        new CleanWebpackPlugin() // для очистки старых скриптов
+        new CleanWebpackPlugin(), // для очистки старых скриптов
+        new CopyWebpackPlugin({ // плагин нужен для копирования элементов в папку dist, потому как пересборка очищает файлы
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'src/icons8-globe-africa-16.ico'), //откуда копируем
+                    to: path.resolve(__dirname, 'dist') // куда
+                }
+            ]
+        })
     ],
     module:{
         rules: [
