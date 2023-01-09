@@ -5,6 +5,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const isDev = process.env.NODE_ENV === 'development'
+const isProd = !isDev
+console.log(isDev)
+
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
@@ -26,7 +30,7 @@ module.exports = {
     optimization: {
         splitChunks: {
             chunks: 'all'
-        }
+        },
     },
     devServer:{
         static: {
@@ -35,6 +39,7 @@ module.exports = {
         compress: true,
         port: 4200,
         open: true,
+        hot: isDev
     },
     plugins:[
         new HTMLWebpackPlugin({
@@ -44,7 +49,10 @@ module.exports = {
             
             // webpack пересоздаёт файл dist/index.html. 
             // Чтобы в нем не удялялась наша верстка, мы прописываем путь к нашему файлику
-            template: './index.html' 
+            template: './index.html',
+            minify:{
+                collapseWhitespace: isProd
+            }
         }),
         new CleanWebpackPlugin(), // для очистки старых скриптов
         new CopyWebpackPlugin({ 
@@ -58,7 +66,9 @@ module.exports = {
             ]
         }),
         new MiniCssExtractPlugin({
-            filename: '[name][contenthash].css', 
+            // filename: "[name].css"//'[name][contenthash].css', 
+            filename: isDev ? "[name].css" : "[name].[contenthash].css",
+            // chunkFilename: devMode ? "[id].css" : "[id].[contenthash].css",
         })
     ],
     module:{
@@ -72,7 +82,10 @@ module.exports = {
                 use: [ 
                     {
                         loader: MiniCssExtractPlugin.loader,
-                        options: {},
+                        options: {
+                            // hmr: isDev, //hmr - hot module replacment - горячая перезагрузка модулей
+                            // // reloadAll: true
+                        },
                     },
                     'css-loader'
                 ] 
