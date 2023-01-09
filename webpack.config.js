@@ -4,10 +4,27 @@ const { Template } = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetWebpackPlugin = require('css-minimizer-webpack-plugin')
+const TerserWebpackPlugin = require('terser-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
-console.log(isDev)
+
+const optimization = () => {
+    const config = {
+        splitChunks: {
+            chunks: 'all'
+        },
+    }
+
+    if(isProd){
+        config.minimizer = [
+            new OptimizeCssAssetWebpackPlugin(), // для оптимизации css
+            new TerserWebpackPlugin() 
+        ]
+    }
+    return config
+}
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -27,11 +44,7 @@ module.exports = {
             '@': path.resolve(__dirname, 'src')
         }
     },
-    optimization: {
-        splitChunks: {
-            chunks: 'all'
-        },
-    },
+    optimization: optimization(),
     devServer:{
         static: {
             directory: path.join(__dirname, 'src'),
@@ -51,7 +64,7 @@ module.exports = {
             // Чтобы в нем не удялялась наша верстка, мы прописываем путь к нашему файлику
             template: './index.html',
             minify:{
-                collapseWhitespace: isProd
+                collapseWhitespace: isProd // для оптимизации html
             }
         }),
         new CleanWebpackPlugin(), // для очистки старых скриптов
