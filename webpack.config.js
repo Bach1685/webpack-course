@@ -104,6 +104,30 @@ module.exports = {
                 ] 
             },
             {
+                test: /\.less$/,
+                use: [ 
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                        },
+                    },
+                    'css-loader',
+                    'less-loader'
+                ] 
+            },
+            {
+                test: /\.s[ac]ss$/,
+                use: [ 
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                        },
+                    },
+                    'css-loader',
+                    'sass-loader'
+                ] 
+            },
+            {
                 // говорим вебпаку: как только ты встречаешь файлы с расширением png или jpg или svg или git
                 // тогде тебе необъходимо использовать определённый тип лоадеров
                 test: /\.(png|jpg|svg|gif)$/,
@@ -113,12 +137,7 @@ module.exports = {
                  type: 'asset/resource'
             },
             {
-                // говорим вебпаку: как только ты встречаешь файлы с расширением png или jpg или svg или git
-                // тогде тебе необъходимо использовать определённый тип лоадеров
                 test: /\.(ttf|woff|woff2|eot)$/,
-                // use: ['file-loader'] 
-                // Проблема с дублированием файлов (png, fonts).
-                // Вместо use: 'file-loader' используйте type: 'asset/resource' - это нововведение (относительное) Webpack, которое помогает избежать данной ошибки. Подробнее можно узнать в документации Webpack в разделе asset-modules, там все кристально объяснено.
                  type: 'asset/resource'
             },
             {

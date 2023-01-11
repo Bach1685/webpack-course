@@ -5,6 +5,8 @@ import WebpackLogo from './assets/webpack-logo.png'
 import xml from '@/assets/data.xml'
 import csv from '@/assets/data.csv'
 import * as $ from 'jquery' //* as $ - означает, что мы импортироует абсолютно всё в переменную $
+import './styles/less.less'
+import './styles/scss.scss'
 
 const post = new Post('webpack post title', WebpackLogo)
 
