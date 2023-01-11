@@ -47,7 +47,7 @@ module.exports = {
     mode: 'development',
     entry: {
         main: ['@babel/polyfill','./index.js'],
-        analytics: './analytics.js'
+        analytics: './analytics.ts'
     }, // входной файл
     output: {
         filename: '[name][contenthash].js', // куда складываются все скрипты
@@ -145,10 +145,26 @@ module.exports = {
                 use: {
                   loader: "babel-loader",
                   options: {
-                    presets: ['@babel/preset-env'] // этого пресета в принципе достаточно
+                    presets: [
+                        '@babel/preset-env',  // этого пресета в принципе достаточно
+                    ]
+
                   }
                 }
-              }
+            },
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: "babel-loader",
+                  options: {
+                    presets: [
+                        '@babel/preset-env', 
+                        '@babel/preset-typescript'
+                    ] 
+                  }
+                }
+            }
         ]
     }
 }
