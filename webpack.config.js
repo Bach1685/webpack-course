@@ -10,6 +10,22 @@ const TerserWebpackPlugin = require('terser-webpack-plugin')
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
 
+const cssLoaders = extra => {
+    const loaders = [
+        {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+            },
+        },
+        'css-loader'
+    ]
+
+    if (extra) {
+        loaders.push(extra)
+    }
+    return loaders
+}
+
 const optimization = () => {
     const config = {
         splitChunks: {
@@ -92,40 +108,15 @@ module.exports = {
                 test: /\.css$/,
                 // важен порядок: вебпак идёт справа налево, пропуская всё сначала через css-loader и так далее.
                 // style-loader добавляет css в тег head в html 
-                use: [ 
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            // hmr: isDev, //hmr - hot module replacment - горячая перезагрузка модулей
-                            // // reloadAll: true
-                        },
-                    },
-                    'css-loader'
-                ] 
+                use: cssLoaders() 
             },
             {
                 test: /\.less$/,
-                use: [ 
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                        },
-                    },
-                    'css-loader',
-                    'less-loader'
-                ] 
+                use: cssLoaders('less-loader') 
             },
             {
                 test: /\.s[ac]ss$/,
-                use: [ 
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                        },
-                    },
-                    'css-loader',
-                    'sass-loader'
-                ] 
+                use: cssLoaders('sass-loader') 
             },
             {
                 // говорим вебпаку: как только ты встречаешь файлы с расширением png или jpg или svg или git
